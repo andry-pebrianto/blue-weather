@@ -5,8 +5,6 @@ import axios, { AxiosError } from "axios";
 
 const router = useRouter();
 
-const mapboxApiKey =
-  "pk.eyJ1IjoibmlsYWJpcnUiLCJhIjoiY2xzc3JuMWhtMXB0ZTJxbXB5cXd4aDl0aCJ9.LTmkXHL7mu769Tqevu1S3Q";
 const searchQuery = ref<string>("");
 const queryTimeout = ref<null | number>(null);
 const mapboxSearchResults = ref<any>(null);
@@ -20,7 +18,11 @@ const getSearchResults = () => {
     if (searchQuery.value !== "") {
       try {
         const result = await axios.get(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery.value}.json?access_token=${mapboxApiKey}&types=place`
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${
+            searchQuery.value
+          }.json?access_token=${
+            import.meta.env.VITE_MAPBOX_API_KEY
+          }&types=place`
         );
         mapboxSearchResults.value = result.data.features;
       } catch (error) {
