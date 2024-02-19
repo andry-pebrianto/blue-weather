@@ -21,12 +21,12 @@ defineProps({
         <Transition name="modal-inner">
           <div
             v-if="modalActive"
-            class="p-4 bg-white self-start mt-32 max-w-screen-md"
+            class="p-6 bg-white self-start mt-32 max-w-screen-md rounded-md"
           >
             <slot></slot>
             <button
               @click="$emit('toggle')"
-              class="text-white mt-8 bg-[#596FB7] py-2 px-6"
+              class="text-white mt-8 bg-[#596FB7] py-2 px-6 rounded-md"
             >
               Close
             </button>

@@ -5,9 +5,9 @@ import App from "./App.vue";
 import router from "./router";
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { FaSun, BiInfoCircleFill, BiPlusCircleFill } from "oh-vue-icons/icons";
+import { FaSun, BiInfoCircleFill, BiPlusCircleFill, MdLocationcity } from "oh-vue-icons/icons";
 
-addIcons(FaSun, BiInfoCircleFill, BiPlusCircleFill);
+addIcons(FaSun, BiInfoCircleFill, BiPlusCircleFill, MdLocationcity);
 
 const app = createApp(App);
 app.use(router);
