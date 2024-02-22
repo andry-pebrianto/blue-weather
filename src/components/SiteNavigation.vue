@@ -1,11 +1,52 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { RouterLink } from "vue-router";
+import {
+  RouterLink,
+  useRoute,
+  type LocationQueryValue,
+  useRouter,
+} from "vue-router";
+import { uid } from "uid";
 import BaseModal from "./BaseModal.vue";
 
 const modalActive = ref(false);
 const toggleModal = () => {
   modalActive.value = !modalActive.value;
+};
+
+type cityType = {
+  id: string;
+  state: string | string[];
+  city: string | string[];
+  coords: {
+    lat: LocationQueryValue | LocationQueryValue[];
+    lng: LocationQueryValue | LocationQueryValue[];
+  };
+};
+
+const router = useRouter();
+const route = useRoute();
+const savedCities = ref<cityType[]>([]);
+const addCity = () => {
+  if (localStorage.getItem("savedCities")) {
+    savedCities.value = JSON.parse(localStorage.getItem("savedCities") || "");
+  }
+
+  const locationObj = {
+    id: uid(),
+    state: route.params.state,
+    city: route.params.city,
+    coords: {
+      lat: route.query.lat,
+      lng: route.query.lng,
+    },
+  };
+  savedCities.value.push(locationObj);
+  localStorage.setItem("savedCities", JSON.stringify(savedCities.value));
+
+  let query = Object.assign({}, route.query);
+  delete query.preview;
+  router.replace({ query });
 };
 </script>
 
@@ -29,6 +70,8 @@ const toggleModal = () => {
           scale="1.4"
         />
         <v-icon
+          @click="addCity"
+          v-if="route.query.preview"
           name="bi-plus-circle-fill"
           class="cursor-pointer hover:scale-150 duration-200"
           scale="1.4"
