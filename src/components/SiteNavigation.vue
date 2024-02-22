@@ -17,7 +17,7 @@ const toggleModal = () => {
       <RouterLink :to="{ name: 'home' }">
         <div class="flex items-center gap-3">
           <v-icon name="fa-sun" scale="2" />
-          <p class="text-xl">The Local Weather</p>
+          <p class="text-xl">Blue Weather</p>
         </div>
       </RouterLink>
 
