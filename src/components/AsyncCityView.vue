@@ -57,18 +57,6 @@ function separateString(text: string | string[]) {
 
 <template>
   <div class="flex flex-col flex-1 items-center">
-    <!-- Banner -->
-    <div
-      v-if="route.query.preview"
-      class="text-white p-4 w-full text-center bg-[#4c62ac]"
-    >
-      <p>
-        You are currently previewing this city, click the "+" icon to start
-        tracking this city.
-      </p>
-    </div>
-    <!-- Banner -->
-
     <div class="flex flex-col items-center text-white py-12">
       <h1 class="text-5xl mb-8 text-center font-bold">
         {{ separateString(route.params.city) }}

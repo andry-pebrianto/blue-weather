@@ -1,53 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import {
-  RouterLink,
-  useRoute,
-  type LocationQueryValue,
-  useRouter,
-} from "vue-router";
-import { uid } from "uid";
+import { RouterLink } from "vue-router";
 import BaseModal from "./BaseModal.vue";
 
 const modalActive = ref(false);
-const toggleModal = () => {
-  modalActive.value = !modalActive.value;
-};
-
-type cityType = {
-  id: string;
-  state: string | string[];
-  city: string | string[];
-  coords: {
-    lat: LocationQueryValue | LocationQueryValue[];
-    lng: LocationQueryValue | LocationQueryValue[];
-  };
-};
-
-const router = useRouter();
-const route = useRoute();
-const savedCities = ref<cityType[]>([]);
-const addCity = () => {
-  if (localStorage.getItem("savedCities")) {
-    savedCities.value = JSON.parse(localStorage.getItem("savedCities") || "");
-  }
-
-  const locationObj = {
-    id: uid(),
-    state: route.params.state,
-    city: route.params.city,
-    coords: {
-      lat: route.query.lat,
-      lng: route.query.lng,
-    },
-  };
-  savedCities.value.push(locationObj);
-  localStorage.setItem("savedCities", JSON.stringify(savedCities.value));
-
-  let query = Object.assign({}, route.query);
-  delete query.preview;
-  router.replace({ query });
-};
+const toggleModal = () => (modalActive.value = !modalActive.value);
 </script>
 
 <template>
@@ -69,13 +26,6 @@ const addCity = () => {
           class="cursor-pointer hover:scale-150 duration-200"
           scale="1.4"
         />
-        <v-icon
-          @click="addCity"
-          v-if="route.query.preview"
-          name="bi-plus-circle-fill"
-          class="cursor-pointer hover:scale-150 duration-200"
-          scale="1.4"
-        />
       </div>
 
       <BaseModal @toggle="toggleModal" :modal-active="modalActive">
@@ -94,18 +44,7 @@ const addCity = () => {
               Select a city within the results, this will take you to the
               current weather for your selection.
             </li>
-            <li>
-              Track the city by clicking on the "+" icon in the top right. This
-              will save the city to view at a later time on the home page.
-            </li>
           </ol>
-
-          <h2 class="text-2xl">Removing a city</h2>
-          <p>
-            If you no longer wish to track a city, simply select the city within
-            the home page. At the bottom of the page, there will be am option to
-            delete the city.
-          </p>
         </div>
       </BaseModal>
     </nav>
